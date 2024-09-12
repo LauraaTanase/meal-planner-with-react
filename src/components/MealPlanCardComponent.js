@@ -1,7 +1,9 @@
 // components/MealPlanCard.js
 import React from 'react';
 
-const MealPlanCard = ({ mealPlan }) => {
+const MealPlanCardComponent = ({ mealPlan, onEdit, onDelete }) => {
+
+
   return (
     <div className="card mb-4">
       <div className="card-header bg-info text-white">
@@ -12,12 +14,12 @@ const MealPlanCard = ({ mealPlan }) => {
         <h6>Lunch: {mealPlan.lunch}</h6>
         <h6>Dinner: {mealPlan.dinner}</h6>
         <div className="d-flex justify-content-between align-items-center mt-3">
-          <button className="btn btn-secondary">Edit</button>
-          <button className="btn btn-danger">Delete</button>
+          <button className="btn btn-secondary" onClick={() => onEdit(mealPlan)}>Edit</button>
+          <button className="btn btn-danger" onClick={() => onDelete(mealPlan)}>Delete</button>
         </div>
       </div>
     </div>
   );
 };
 
-export default MealPlanCard;
+export default MealPlanCardComponent;
