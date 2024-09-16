@@ -1,12 +1,11 @@
-// components/Header.js
 import { Link } from 'react-router-dom';
 
 const HeaderComponent = () => {
   return (
     <header>
       <div className="bg-primary text-white text-center py-3">
-        <h1 className="display-4">Rețete și Planificare Mese</h1>
-        <p className="lead">Simplifică viața ta culinară!</p>
+        <h1 className="display-4">Recipes and Meal Planning</h1>
+        <p className="lead">Simplify your culinary life!</p>
       </div>
 
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -18,16 +17,13 @@ const HeaderComponent = () => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <Link className="nav-link" to="/recipes">Rețete</Link>
+                <Link className="nav-link" to="/recipes">Recipes</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/add-recipe">Adaugă Rețetă</Link>
+                <Link className="nav-link" to="/meal-planning">Meal Planning</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/meal-planning">Planificare Mese</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/about">Despre</Link>
+                <Link className="nav-link" to="/about">About</Link>
               </li>
             </ul>
           </div>
