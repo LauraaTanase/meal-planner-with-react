@@ -1,23 +1,18 @@
-// components/SearchBar.js
-import React from 'react';
+import React from "react";
 
-const SearchBar = ({ searchTerm, setSearchTerm }) => {
+const SearchBarComponent = ({ searchTerm, setSearchTerm }) => {
   return (
-    <div className="input-group mb-4">
-      <input
-        type="text"
-        className="form-control"
-        placeholder="🔎Caută rețete..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <div className="input-group-append">
-        <button className="btn btn-outline-primary" type="button">
-          Caută
-        </button>
+    <div className="container-fluid d-flex gap-3 align-items-center p-2">
+      <div className="d-flex ms-auto w-50 align-items-center">
+        <input
+          type="search"
+          className="form-control"
+          placeholder="🔎Search recipes"
+          aria-label="Search"
+        />
       </div>
     </div>
   );
 };
 
-export default SearchBar;
+export default SearchBarComponent;
