@@ -4,43 +4,49 @@ import HeaderComponent from '../components/HeaderComponent';
 import FooterComponent from '../components/FooterComponent';
 
 const RecipeDetailPage = () => {
-  const { recipeId } = useParams(); // Obține ID-ul rețetei din URL
+  const { id } = useParams(); // Obține ID-ul rețetei din parametrii URL
   const [recipe, setRecipe] = useState(null); // Stochează detaliile rețetei
+  const [loading, setLoading] = useState(true); // Stochează starea de încărcare
 
   useEffect(() => {
-    const fetchRecipe = async () => {
-      const apiKey = '8732cadd74534cf790c607e69fa6a4ab'; // Înlocuiește cu cheia ta API
-      try {
-        const response = await fetch(`https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${apiKey}`);
-        const data = await response.json();
-        setRecipe(data);
-      } catch (error) {
-        console.error('Error fetching recipe:', error);
-      }
-    };
+    const appId = '02ee30ec'; // ID-ul tău API Edamam
+    const appKey = '507a040a3ded74c77bff2f59827b078e'; // Cheia ta API
+    const url = `https://api.edamam.com/api/recipes/v2/${id}?type=public&app_id=${appId}&app_key=${appKey}`;
 
-    fetchRecipe();
-  }, [recipeId]); // Răspunde la schimbarea ID-ului rețetei
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        setRecipe(data.recipe);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching recipe details:', error);
+        setLoading(false);
+      });
+  }, [id]);
 
-  // Dacă rețeta nu este încă disponibilă, afișează un mesaj de încărcare
+  if (loading) {
+    return <div>Loading...</div>; // Afișează un mesaj de încărcare dacă datele sunt încă în curs de obținere
+  }
+
   if (!recipe) {
-    return <div>Loading...</div>;
+    return <div>Recipe not found.</div>; // Afișează un mesaj dacă rețeta nu a fost găsită
   }
 
   return (
     <div>
       <HeaderComponent />
       <div className="container my-4">
-        <h1 className="text-center mb-4">{recipe.title}</h1>
+        <h1 className="text-center mb-4">{recipe.label}</h1>
         <div className="text-center mb-4">
-          <img src={recipe.image} alt={recipe.title} className="img-fluid" style={{ maxWidth: '600px' }} />
+          <img src={recipe.image} alt={recipe.label} className="img-fluid" style={{ maxWidth: '600px' }} />
         </div>
         <div className="row">
           <div className="col-md-6">
             <h3>Ingredients:</h3>
             <ul>
-              {recipe.extendedIngredients.map(ingredient => (
-                <li key={ingredient.id}>{ingredient.original}</li>
+              {recipe.extendedIngredients.map((ingredient, index) => (
+                <li key={index}>{ingredient.original}</li> // Folosește indexul pentru cheia elementului
               ))}
             </ul>
           </div>

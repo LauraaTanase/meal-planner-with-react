@@ -1,17 +1,22 @@
 import React from "react";
 import HeaderComponent from "../components/HeaderComponent";
 import FooterComponent from "../components/FooterComponent";
-import RecipeCard from "../components/RecipeCardComponent";
-import MealPlanCard from "../components/MealPlanCardComponent";
+import HomePageContainer from "../containers/HomePageContainer";
 
 function HomePage() {
-    return(
+    return (
         <div className="container-fluid">
-<HeaderComponent/>
-{/* <RecipeCard/>
-<MealPlanCard/> */}
-<FooterComponent/>
+            <HeaderComponent />
 
+            {/* Recipe and Meal Plan Cards Section */}
+            <div className="py-5">
+                <div className="container">
+                    <h2 className="mb-4 text-center">Featured Recipes & Meal Plans</h2>
+<HomePageContainer/>
+                </div>
+            </div>
+
+            <FooterComponent />
         </div>
     );
 };
