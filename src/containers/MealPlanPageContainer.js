@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import MealPlanCardComponent from "../components/MealPlanCardComponent";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFaceSadTear } from "@fortawesome/free-solid-svg-icons";
 
 const MealPlanPageContainer = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -20,12 +22,12 @@ const MealPlanPageContainer = () => {
       setMealPlanForDate(
         mealPlans[formattedDate] || { breakfast: [], lunch: [], dinner: [] }
       );
-      setLoading(false); 
+      setLoading(false);
     }, 1000);
   }, [selectedDate]);
 
   const handleDateChange = (date) => {
-    setLoading(true); 
+    setLoading(true);
     setSelectedDate(date);
   };
 
@@ -47,7 +49,7 @@ const MealPlanPageContainer = () => {
           {loading ? (
             <div
               className="d-flex justify-content-center align-items-center"
-              style={{ height: "50vh" }} 
+              style={{ height: "50vh" }}
             >
               <div className="spinner-border" role="status">
                 <span className="visually-hidden">Loading...</span>
@@ -58,25 +60,33 @@ const MealPlanPageContainer = () => {
               <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 {["breakfast", "lunch", "dinner"].map((mealType) => (
                   <div key={mealType} className="col mb-4">
-                    <h3 className="text-capitalize text-center mb-3">{mealType}</h3>
+                    <h3 className="text-capitalize text-center mb-3">
+                      {mealType}
+                    </h3>
                     {mealPlanForDate[mealType]?.length > 0 ? (
                       <div className="d-flex flex-wrap justify-content-start">
                         {mealPlanForDate[mealType].map((mealPlan) => (
                           <div
                             className="card mb-3 me-3"
                             key={mealPlan.idMeal}
-                            style={{ maxWidth: '300px', flex: '1 0 auto' }}
+                            style={{ maxWidth: "300px", flex: "1 0 auto" }}
                           >
                             <MealPlanCardComponent
                               strMeal={mealPlan.strMeal}
                               strThumb={mealPlan.strMealThumb}
-                              idMeal={mealPlan.idMeal} 
+                              idMeal={mealPlan.idMeal}
                             />
                           </div>
                         ))}
                       </div>
                     ) : (
-                      <p>No {mealType} planned for this day.</p>
+                      <div className="d-flex flex-wrap justify-content-start">
+                        <p className="text-center mt-3">
+                          <FontAwesomeIcon icon={faFaceSadTear} size="2x" />
+                          <br />
+                          No {mealType} planned for this day.
+                        </p>
+                      </div>
                     )}
                   </div>
                 ))}
@@ -98,9 +108,16 @@ const MealPlanPageContainer = () => {
                   );
 
                   if (confirmClear) {
-                    delete mealPlans[formattedDate]; 
-                    localStorage.setItem("mealPlans", JSON.stringify(mealPlans)); 
-                    setMealPlanForDate({ breakfast: [], lunch: [], dinner: [] }); 
+                    delete mealPlans[formattedDate];
+                    localStorage.setItem(
+                      "mealPlans",
+                      JSON.stringify(mealPlans)
+                    );
+                    setMealPlanForDate({
+                      breakfast: [],
+                      lunch: [],
+                      dinner: [],
+                    });
                     alert(
                       `All meal plans for ${formattedDate} have been cleared.`
                     );
