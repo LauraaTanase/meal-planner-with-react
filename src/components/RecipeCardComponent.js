@@ -1,21 +1,27 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const RecipeCardComponent = ({ recipe, onAddToMealPlan }) => {
+
+
+const RecipeCardComponent = ({ recipe,strMeal,strMealThumb,idMeal, onAddToMealPlan }) => {
+const navigate = useNavigate();
+
   return (
     <div className="card mb-4 shadow-sm d-flex flex-column h-100">
       <img
-        src={recipe.image}
-        alt={recipe.title}
+        src={recipe.strMealThumb}
+        alt={recipe.strMeal}
         className="card-img-top img-fluid"
         style={{ height: "200px", objectFit: "cover" }}
       />
       <div className="card-body d-flex flex-column flex-grow-1">
-        <h5 className="card-title">{recipe.title}</h5>
+        <h5 className="card-title">{recipe.strMeal}</h5>
         <p className="card-text">Some details about the recipe.</p>
 
         <div className="mt-auto d-flex justify-content-between align-items-center">
-          <a href={`/recipe/${recipe.id}`} className="btn btn-primary me-2">
+          <a href={`/recipe/${idMeal}`} className="btn btn-primary me-2" >
             View Details
+           
           </a>
           <div className="dropdown">
             <button
@@ -60,4 +66,4 @@ const RecipeCardComponent = ({ recipe, onAddToMealPlan }) => {
   );
 };
 
-export default RecipeCardComponent;
+export default RecipeCardComponent

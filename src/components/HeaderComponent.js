@@ -23,7 +23,7 @@ const HeaderComponent = () => {
                 <Link className="nav-link" to="/meal-planning">Meal Planning</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/about">About</Link>
+                <Link className="nav-link" to="/cocktails">Cocktail hour</Link>
               </li>
             </ul>
           </div>
