@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import MealDetailsComponent from "../components/MealDetailsComponent";
-import HeaderComponent from "../components/HeaderComponent";
-import FooterComponent from "../components/FooterComponent";
+import MealVideoTutorial from "../components/MealVideoTutorial";
+import MealImageComponent from "../components/MealImageComponent";
 
-const RecipeDetailPageContainer = (strMealThumb) => {
-  const { id } = useParams(); // Obținem ID-ul rețetei din URL
+const RecipeDetailPageContainer = () => {
+  const { id } = useParams(); 
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
-    // Verificăm dacă rețeta există în planificatorul local sau o luăm din API
+    // Verific dacă rețeta există în planificatorul local sau o luăm din API
     const mealPlans = JSON.parse(localStorage.getItem("mealPlans")) || {};
     const foundRecipe = Object.values(mealPlans)
       .flat()
@@ -27,37 +26,95 @@ const RecipeDetailPageContainer = (strMealThumb) => {
             console.error("Recipe not found in API response");
           }
         })
-        .catch((error) => console.error("Error fetching recipe details:", error));
+        .catch((error) =>
+          console.error("Error fetching recipe details:", error)
+        );
     }
   }, [id]);
 
   if (!recipe) {
-    return <div>Loading...</div>;
+    return <div className="container text-center mt-5">Loading...</div>;
   }
 
-  // // // Extragem instrucțiunile și ingredientele din rețetă
-   const instructions = recipe.strInstructions
-   ? recipe.strInstructions.split("\r\n")
-    : []; // Împărțim instrucțiunile într-un array
-   const ingredients = [];
+
+  const instructions = recipe.strInstructions
+    ? recipe.strInstructions.split("\r\n").map((step) => step.replace(/^Step \d+:/, '').trim())
+    : []; //
+
+  const ingredients = [];
   for (let i = 1; i <= 20; i++) {
     const ingredient = recipe[`strIngredient${i}`];
     const measure = recipe[`strMeasure${i}`];
     if (ingredient && ingredient.trim() !== "") {
       ingredients.push({ ingredient, measure });
     }
-   }
+  }
+
+  const videoUrl = recipe.strYoutube;
 
   return (
-    <div className="container">
-      <HeaderComponent />
-      <MealDetailsComponent
-        instructions={instructions} // Trimitem instrucțiunile
-        data={recipe} // Trimitem rețeta întreagă (care include toate detaliile)
-        ingredients={ingredients} // Trimitem ingredientele și măsurile separat
-        src={strMealThumb}
-      />
-      <FooterComponent />
+    <div className="container mt-4">
+      <div className="row">
+        {/* Partea stângă: Detalii despre rețetă */}
+        <div className="col-md-8">
+          <div className="card mb-4">
+            <div className="card-body">
+              <h5 className="card-title">{recipe.strMeal}</h5>
+              <p className="card-text">
+                <strong>Category:</strong> {recipe.strCategory}
+              </p>
+              <p className="card-text">
+                <strong>Cuisine:</strong> {recipe.strArea}
+              </p>
+
+              {/* Instrucțiuni */}
+              <h6 className="card-subtitle mb-2 text-muted">Instructions</h6>
+              <ul className="list-unstyled">
+                {instructions.length > 0 ? (
+                  instructions.map((instruction, index) => (
+                    <li key={index}>{instruction}</li>
+                  ))
+                ) : (
+                  <li>No instructions available.</li>
+                )}
+              </ul>
+
+              {/* Ingrediente */}
+              <h6 className="card-subtitle mb-2 text-muted">Ingredients</h6>
+              <ul className="list-unstyled">
+                {ingredients.length > 0 ? (
+                  ingredients.map((item, index) => (
+                    <li key={`${item.ingredient}-${index}`}>
+                      {item.ingredient} : {item.measure}
+                    </li>
+                  ))
+                ) : (
+                  <li>No ingredients found.</li>
+                )}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Partea dreaptă: Imagine și video */}
+        <div className="col-md-4">
+          {videoUrl && (
+            <div className="card mb-4">
+              <div className="card-body p-0">
+                <MealVideoTutorial videoUrl={videoUrl} />
+              </div>
+            </div>
+          )}
+          <div className="card mb-4">
+            <div className="card-body">
+              <MealImageComponent
+                src={recipe.strMealThumb}
+                alt={recipe.strMeal}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

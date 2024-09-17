@@ -8,7 +8,6 @@ function HomePage() {
         <div className="container-fluid">
             <HeaderComponent />
 
-            {/* Recipe and Meal Plan Cards Section */}
             <div className="py-5">
                 <div className="container">
                     <h2 className="mb-4 text-center">Featured Recipes & Meal Plans</h2>

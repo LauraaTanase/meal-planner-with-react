@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import RecipeCardComponent from "../components/RecipeCardComponent";
 import SearchBarComponent from "../components/SearchBarComponent";
-import MealPlanCardComponent from "../components/MealPlanCardComponent";
 
 const RecipesPageContainer = () => {
   const [recipes, setRecipes] = useState([]);
@@ -80,9 +79,7 @@ const RecipesPageContainer = () => {
         )}
       </div>
       
-      {/* Meals results */}
       <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        {/* Example placeholder if you need to display meal plans */}
         
       </div>
     </div>

@@ -25,14 +25,12 @@ const MealDetailsComponent = ({ instructions, ingredients, data }) => {
               <p className="card-text">
                 <strong>Cuisine:</strong> {data.strArea}
               </p>
-              <p className="card-text">
-                <strong>Tags:</strong> {data.strTags}
-              </p>
             </div>
           </div>
         </div>
       </div>
 
+{/* //Cardul pentru instructiuni  */}
       <div className="card mb-3">
         <div className="card-body">
           <h5 className="card-title">Instructions</h5>
@@ -48,13 +46,17 @@ const MealDetailsComponent = ({ instructions, ingredients, data }) => {
         </div>
       </div>
 
+      {/* Cardul pentru ingrediente */}
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">Ingredients</h5>
           <ul className="list-group list-group-flush">
             {ingredients.length > 0 ? (
               ingredients.map((item, index) => (
-                <li className="list-group-item" key={`${item.ingredient}-${item.measure}-${index}`}>
+                <li
+                  className="list-group-item"
+                  key={`${item.ingredient}-${item.measure}-${index}`}
+                >
                   {item.ingredient} : {item.measure}
                 </li>
               ))

@@ -1,4 +1,3 @@
-// src/components/MealVideoTutorial.js
 import React from "react";
 
 const MealVideoTutorial = ({ videoUrl }) => {

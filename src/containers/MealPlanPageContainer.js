@@ -59,7 +59,6 @@ const MealPlanPageContainer = () => {
             </div>
           ))}
 
-          {/* Button to clear all meal plans for the selected date */}
           <button
             className="btn btn-danger mt-4"
             onClick={() => {

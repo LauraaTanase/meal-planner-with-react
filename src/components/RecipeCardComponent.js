@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
-
-const RecipeCardComponent = ({ recipe,strMeal,strMealThumb,idMeal, onAddToMealPlan }) => {
+const RecipeCardComponent = ({ recipe, onAddToMealPlan }) => {
 const navigate = useNavigate();
 
   return (
@@ -19,10 +19,9 @@ const navigate = useNavigate();
         <p className="card-text">Some details about the recipe.</p>
 
         <div className="mt-auto d-flex justify-content-between align-items-center">
-          <a href={`/recipe/${idMeal}`} className="btn btn-primary me-2" >
-            View Details
-           
-          </a>
+        <Link to={`/recipe/${recipe.idMeal}`} className="btn btn-primary">
+          View Details
+        </Link>
           <div className="dropdown">
             <button
               className="btn btn-success dropdown-toggle"
