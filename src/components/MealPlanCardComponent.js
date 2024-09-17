@@ -9,15 +9,19 @@ const MealPlanCardComponent = ({ strMeal, strThumb, idMeal }) => {
   };
 
   return (
-    <div className="card mb-4 shadow-md border-0 rounded" onClick={handleClick} style={{ cursor: 'pointer' }}>
-      <div className="card-body d-flex align-items-center">
-        <img
-          src={strThumb}
-          alt={strMeal}
-          className="img-thumbnail me-3 rounded"
-          style={{ width: '120px', height: 'auto', objectFit: 'cover' }}
-        />
-        <span className="fw-bold">{strMeal}</span>
+    <div
+      className="card mb-4 shadow-sm border-0 rounded d-flex flex-column"
+      onClick={handleClick}
+      style={{ cursor: 'pointer' }}
+    >
+      <img
+        src={strThumb}
+        alt={strMeal}
+        className="card-img-top img-fluid"
+        style={{ height: '200px', objectFit: 'cover' }}
+      />
+      <div className="card-body d-flex flex-column justify-content-between">
+        <h5 className="card-title">{strMeal}</h5>
       </div>
     </div>
   );
