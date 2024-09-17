@@ -1,13 +1,13 @@
 import React from "react";
 
-const MealDetailComponent = ({ instructions, data }) => {
-  // Verifică dacă `data` este definit înainte de a accesa proprietăți
+const MealDetailsComponent = ({ instructions, ingredients, data , strMealThumb}) => {
   if (!data) {
     return <div>No data available</div>;
   }
 
   return (
     <>
+      {/* Afișăm instrucțiunile */}
       <div className="card-body">
         <h5 className="card-title">Instructions</h5>
         {Array.isArray(instructions) ? (
@@ -17,31 +17,23 @@ const MealDetailComponent = ({ instructions, data }) => {
             </p>
           ))
         ) : (
-          <p className="card-text">
-            {instructions}
-          </p>
+          <p className="card-text">{instructions}</p>
         )}
       </div>
 
+      {/* Afișăm ingredientele și măsurile */}
       <div className="card-body">
         <h5 className="card-title">Ingredients</h5>
         <ul className="list-group list-group-flush">
-          {Array.from({ length: 20 }).map((_, i) => {
-            const ingredient = data[`strIngredient${i + 1}`];
-            const measure = data[`strMeasure${i + 1}`];
-            if (ingredient && ingredient.trim() !== "") {
-              return (
-                <li className="list-group-item" key={i}>
-                  {ingredient} : {measure}
-                </li>
-              );
-            }
-            return null;
-          })}
+          {ingredients.map((ingredient,strThumb, index) => (
+            <li className="list-group-item" key={index}>
+              {ingredient.ingredient} : {ingredient.measure} : {strMealThumb}
+            </li>
+          ))}
         </ul>
       </div>
     </>
   );
 };
 
-export default MealDetailComponent;
+export default MealDetailsComponent;
