@@ -1,8 +1,12 @@
 import React from 'react';
 
 const FooterComponent = () => {
+  const footerStyle = {
+    backgroundColor: '#001a00',
+  };
+
   return (
-    <footer className="bg-dark text-white text-center py-3 mt-auto">
+    <footer className="text-white text-center py-3 mt-auto" style={footerStyle}>
       <div className="container">
         <p className="mb-0">&copy; 2024 Recipe and Meal Planning. All rights reserved.</p>
         <p className="mb-0">
