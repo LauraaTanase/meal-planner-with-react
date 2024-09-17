@@ -4,11 +4,10 @@ import MealVideoTutorial from "../components/MealVideoTutorial";
 import MealImageComponent from "../components/MealImageComponent";
 
 const RecipeDetailPageContainer = () => {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
-    // Verific dacă rețeta există în planificatorul local sau o luăm din API
     const mealPlans = JSON.parse(localStorage.getItem("mealPlans")) || {};
     const foundRecipe = Object.values(mealPlans)
       .flat()
@@ -36,10 +35,9 @@ const RecipeDetailPageContainer = () => {
     return <div className="container text-center mt-5">Loading...</div>;
   }
 
-
   const instructions = recipe.strInstructions
     ? recipe.strInstructions.split("\r\n").map((step) => step.replace(/^Step \d+:/, '').trim())
-    : []; //
+    : [];
 
   const ingredients = [];
   for (let i = 1; i <= 20; i++) {
@@ -99,17 +97,14 @@ const RecipeDetailPageContainer = () => {
         {/* Partea dreaptă: Imagine și video */}
         <div className="col-md-4">
           {videoUrl && (
-            <div className="card mb-4">
-              <div className="card-body p-0">
-                <MealVideoTutorial videoUrl={videoUrl} />
-              </div>
-            </div>
+            <MealVideoTutorial videoUrl={videoUrl} />
           )}
           <div className="card mb-4">
-            <div className="card-body">
+            <div className="card-body p-0">
               <MealImageComponent
                 src={recipe.strMealThumb}
                 alt={recipe.strMeal}
+                className="img-fluid"
               />
             </div>
           </div>
