@@ -16,7 +16,6 @@ const MealPlanPageContainer = () => {
     const formattedDate = selectedDate.toISOString().split("T")[0];
     const mealPlans = JSON.parse(localStorage.getItem("mealPlans")) || {};
 
-
     setTimeout(() => {
       setMealPlanForDate(
         mealPlans[formattedDate] || { breakfast: [], lunch: [], dinner: [] }
@@ -26,7 +25,7 @@ const MealPlanPageContainer = () => {
   }, [selectedDate]);
 
   const handleDateChange = (date) => {
-    setLoading(true); // 
+    setLoading(true); 
     setSelectedDate(date);
   };
 
@@ -51,33 +50,38 @@ const MealPlanPageContainer = () => {
               style={{ height: "50vh" }} 
             >
               <div className="spinner-border" role="status">
-                <span className="sr-only"></span>
+                <span className="visually-hidden">Loading...</span>
               </div>
             </div>
           ) : (
-            ["breakfast", "lunch", "dinner"].map((mealType) => (
-              <div key={mealType} className="mb-4">
-                <h3 className="text-capitalize">{mealType}</h3>
-                {mealPlanForDate[mealType]?.length > 0 ? (
-                  <div className="row">
-                    {mealPlanForDate[mealType].map((mealPlan) => (
-                      <div
-                        className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
-                        key={mealPlan.idMeal}
-                      >
-                        <MealPlanCardComponent
-                          strMeal={mealPlan.strMeal}
-                          strThumb={mealPlan.strMealThumb}
-                          idMeal={mealPlan.idMeal} 
-                        />
+            <div className="container">
+              <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                {["breakfast", "lunch", "dinner"].map((mealType) => (
+                  <div key={mealType} className="col mb-4">
+                    <h3 className="text-capitalize text-center mb-3">{mealType}</h3>
+                    {mealPlanForDate[mealType]?.length > 0 ? (
+                      <div className="d-flex flex-wrap justify-content-start">
+                        {mealPlanForDate[mealType].map((mealPlan) => (
+                          <div
+                            className="card mb-3 me-3"
+                            key={mealPlan.idMeal}
+                            style={{ maxWidth: '300px', flex: '1 0 auto' }}
+                          >
+                            <MealPlanCardComponent
+                              strMeal={mealPlan.strMeal}
+                              strThumb={mealPlan.strMealThumb}
+                              idMeal={mealPlan.idMeal} 
+                            />
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                    ) : (
+                      <p>No {mealType} planned for this day.</p>
+                    )}
                   </div>
-                ) : (
-                  <p>No {mealType} planned for this day.</p>
-                )}
+                ))}
               </div>
-            ))
+            </div>
           )}
 
           <div className="d-flex justify-content-center">
