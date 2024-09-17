@@ -1,29 +1,22 @@
-import React from 'react'
-import RecipeDetailPageContainer from '../containers/RecipeDetailPageContainer'
-import { useParams } from 'react-router-dom';
-import HeaderComponent from '../components/HeaderComponent';
-import FooterComponent from '../components/FooterComponent';
+import React from "react";
+import RecipeDetailPageContainer from "../containers/RecipeDetailPageContainer";
+import { useParams } from "react-router-dom";
+import HeaderComponent from "../components/HeaderComponent";
+import FooterComponent from "../components/FooterComponent";
 
-
-
-  const RecipeDetailPage =() =>  {
-    const { id } = useParams();
+const RecipeDetailPage = () => {
+  const { id } = useParams();
   return (
-   
-<div className="container-fluid">
-<HeaderComponent/>
-<div className="py-5">
-    <div className="container">
-        <RecipeDetailPageContainer />
+    <div className="container-fluid">
+      <HeaderComponent />
+      <div className="py-5">
+        <div className="container">
+          <RecipeDetailPageContainer />
         </div>
-        <FooterComponent/>
-</div>
+        <FooterComponent />
+      </div>
+    </div>
+  );
+};
 
-</div>
-  )
-}
-
-
-
-
-export default RecipeDetailPage
+export default RecipeDetailPage;
