@@ -6,6 +6,7 @@ import SearchBarComponent from "../components/SearchBarComponent";
 const RecipesPageContainer = () => {
   const [recipes, setRecipes] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [loading, setLoading] = useState(false); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,6 +14,7 @@ const RecipesPageContainer = () => {
   }, [searchValue]);
 
   const fetchData = (searchValue) => {
+    setLoading(true); 
     fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchValue}`)
       .then((response) => response.json())
       .then((data) => {
@@ -26,6 +28,9 @@ const RecipesPageContainer = () => {
       .catch((error) => {
         console.error("Fetch error:", error);
         setRecipes([]);
+      })
+      .finally(() => {
+        setLoading(false); 
       });
   };
 
@@ -61,27 +66,32 @@ const RecipesPageContainer = () => {
         searchValue={searchValue}
         onSearchChange={handleSearchChange}
       />
-      <div className="row">
-        {recipes.length > 0 ? (
-          recipes.map((recipe) => (
-            <div
-              className="col-sm-12 col-md-6 col-lg-4 mb-4"
-              key={recipe.idMeal}
-            >
-              <RecipeCardComponent
-                recipe={recipe}
-                onAddToMealPlan={addToMealPlan}
-              />
-            </div>
-          ))
-        ) : (
-          <p>No recipes available.</p>
-        )}
-      </div>
       
-      <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        
-      </div>
+      {loading ? ( 
+        <div className="d-flex justify-content-center my-4">
+          <div className="spinner-border" role="status">
+            <span className="sr-only"></span>
+          </div>
+        </div>
+      ) : (
+        <div className="row">
+          {recipes.length > 0 ? (
+            recipes.map((recipe) => (
+              <div
+                className="col-sm-12 col-md-6 col-lg-4 mb-4"
+                key={recipe.idMeal}
+              >
+                <RecipeCardComponent
+                  recipe={recipe}
+                  onAddToMealPlan={addToMealPlan}
+                />
+              </div>
+            ))
+          ) : (
+            <p>No recipes available.</p>
+          )}
+        </div>
+      )}
     </div>
   );
 };
