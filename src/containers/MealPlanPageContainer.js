@@ -10,7 +10,7 @@ const MealPlanPageContainer = () => {
     lunch: [],
     dinner: [],
   });
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const formattedDate = selectedDate.toISOString().split("T")[0];
