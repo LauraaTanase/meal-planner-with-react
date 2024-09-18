@@ -40,7 +40,7 @@ const HeaderComponent = () => {
                 <Link className="nav-link" to="/meal-planning" style={navLinkStyle}>Meal Planning</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/cocktails" style={navLinkStyle}>Cocktail hour</Link>
+                <Link className="nav-link" to="/About" style={navLinkStyle}>About</Link>
               </li>
             </ul>
           </div>
