@@ -3,19 +3,19 @@ import { Link } from 'react-router-dom';
 
 const HeaderComponent = () => {
   const headerStyle = {
-    backgroundColor: '#004526', /* Schimbă culoarea de fundal */
-    color: '#fff', /* Schimbă culoarea textului */
+    backgroundColor: '#004526', 
+    color: '#fff', 
     textAlign: 'center',
     padding: '1rem',
   };
 
   const navbarStyle = {
-    backgroundColor: '#001a00', /* Schimb culoarea de fundal a navbar-ului */
+    backgroundColor: '#001a00', 
   };
 
   const navLinkStyle = {
-    color: '#fff', /* Schimbă culoarea textului link-urilor */
-    textDecoration: 'none', /* Elimină sublinierea link-urilor */
+    color: '#fff', 
+    textDecoration: 'none', 
   };
 
   return (
