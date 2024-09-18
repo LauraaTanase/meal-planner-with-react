@@ -2,7 +2,7 @@ import React from "react";
 import "react-calendar/dist/Calendar.css";
 import HeaderComponent from "../components/HeaderComponent";
 import FooterComponent from "../components/FooterComponent";
-import MealPlanPageContainer from "../containers/MealPlanPageContainer";
+import MealPlanPageContainer from "../containers/MealPlanContainer";
 
 const MealPlanPage = () => {
   return (

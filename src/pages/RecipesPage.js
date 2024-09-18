@@ -1,5 +1,5 @@
 import React from "react";
-import RecipesPageContainer from "../containers/RecipesPageContainer";
+import RecipesPageContainer from "../containers/RecipesContainer";
 import HeaderComponent from "../components/HeaderComponent";
 import FooterComponent from "../components/FooterComponent";
 
