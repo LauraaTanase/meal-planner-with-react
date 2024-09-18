@@ -13,6 +13,9 @@ const MealPlanPageContainer = () => {
     dinner: [],
   });
   const [loading, setLoading] = useState(true);
+  const [showClearModal, setShowClearModal] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
 
   useEffect(() => {
     const formattedDate = selectedDate.toISOString().split("T")[0];
@@ -29,6 +32,31 @@ const MealPlanPageContainer = () => {
   const handleDateChange = (date) => {
     setLoading(true);
     setSelectedDate(date);
+  };
+
+  const handleClearList = () => {
+    const formattedDate = selectedDate.toISOString().split("T")[0];
+    const mealPlans = JSON.parse(localStorage.getItem("mealPlans")) || {};
+
+    if (mealPlans[formattedDate]) {
+      delete mealPlans[formattedDate];
+      localStorage.setItem("mealPlans", JSON.stringify(mealPlans));
+      setMealPlanForDate({
+        breakfast: [],
+        lunch: [],
+        dinner: [],
+      });
+      setAlertMessage(`All meal plans for ${formattedDate} have been cleared.`);
+      setShowAlert(true);
+    } else {
+      setAlertMessage(`No meal plans found for ${formattedDate}.`);
+      setShowAlert(true);
+    }
+    setShowClearModal(false);
+  };
+
+  const handleCloseAlert = () => {
+    setShowAlert(false);
   };
 
   return (
@@ -97,41 +125,78 @@ const MealPlanPageContainer = () => {
           <div className="d-flex justify-content-center">
             <button
               className="btn btn-danger mt-4"
-              onClick={() => {
-                const formattedDate = selectedDate.toISOString().split("T")[0];
-                const mealPlans =
-                  JSON.parse(localStorage.getItem("mealPlans")) || {};
-
-                if (mealPlans[formattedDate]) {
-                  const confirmClear = window.confirm(
-                    "Are you sure you want to clear all meal plans for this day?"
-                  );
-
-                  if (confirmClear) {
-                    delete mealPlans[formattedDate];
-                    localStorage.setItem(
-                      "mealPlans",
-                      JSON.stringify(mealPlans)
-                    );
-                    setMealPlanForDate({
-                      breakfast: [],
-                      lunch: [],
-                      dinner: [],
-                    });
-                    alert(
-                      `All meal plans for ${formattedDate} have been cleared.`
-                    );
-                  }
-                } else {
-                  alert(`No meal plans found for ${formattedDate}.`);
-                }
-              }}
+              onClick={() => setShowClearModal(true)}
             >
               Clear List
             </button>
           </div>
         </div>
       </div>
+
+      {/* Modal de confirmare*/}
+      <div className={`modal ${showClearModal ? 'show d-block' : ''}`} tabIndex="-1" style={{ display: showClearModal ? 'block' : 'none' }}>
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Confirm Clear List</h5>
+              <button
+                type="button"
+                className="btn-close"
+                onClick={() => setShowClearModal(false)}
+              ></button>
+            </div>
+            <div className="modal-body">
+              <p>Are you sure you want to clear all meal plans for {selectedDate.toDateString()}?</p>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={() => setShowClearModal(false)}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={handleClearList}
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Modal de alertă */}
+      {showAlert && (
+        <div className={`modal ${showAlert ? 'show d-block' : ''}`} tabIndex="-1" style={{ display: showAlert ? 'block' : 'none' }}>
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Alert</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={handleCloseAlert}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <p>{alertMessage}</p>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleCloseAlert}
+                >
+                  OK
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
