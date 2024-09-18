@@ -6,7 +6,7 @@ const SearchBarComponent = ({ searchValue, onSearchChange, placeholder }) => {
       <input
         type="text"
         className="form-control"
-        placeholder={placeholder}
+        placeholder='🔎search for recipes'
         value={searchValue}
         onChange={(e) => onSearchChange(e.target.value)}
       />
