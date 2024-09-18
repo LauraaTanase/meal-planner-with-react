@@ -1,0 +1,56 @@
+/* HomePageContainer.css */
+.page-cover {
+  background-image: url('../img/HomePageCover.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  width: 100vw; /* Asigură că acoperă întreaga lățime a viewport-ului */
+  height: 90vh; /* Asigură că acoperă întreaga înălțime a viewport-ului */
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  overflow-x: hidden; /* Ascunde orice scroll orizontal */
+}
+
+.body-homepage {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Ascunde orice scroll orizontal */
+}
+
+.container-homepage {
+  width: 100%; /* Asigură că containerul Bootstrap acoperă întreaga lățime */
+  max-width: 100%; /* Evită limitarea lățimii containerului Bootstrap */
+  padding-left: 2rem; /* Înlătură eventualele padding-uri */
+  padding-right: 2rem; /* Înlătură eventualele padding-uri */
+}
+
+.row-homepage {
+  margin-left: 0; /* Înlătură eventualele margini */
+  margin-right: 0; /* Înlătură eventualele margini */
+}
+
+.col-md-6-homepage {
+  padding-left: 0; /* Înlătură eventualele padding-uri */
+  padding-right: 0; /* Înlătură eventualele padding-uri */
+}
+
+.hero-title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: rgb(146, 93, 28);
+}
+
+.hero-description {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: rgb(180, 104, 12);
+}
+
+.btn-homepage {
+  min-width: 150px;
+  color: rgb(85, 49, 4);
+}
+
