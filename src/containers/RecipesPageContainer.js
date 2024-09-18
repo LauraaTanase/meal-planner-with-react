@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import RecipeCardComponent from "../components/RecipeCardComponent";
-import SearchBarComponent from "../components/SearchBarComponent";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import RecipeCardComponent from '../components/RecipeCardComponent';
+import SearchBarComponent from '../components/SearchBarComponent';
+
 
 const RecipesPageContainer = () => {
   const [recipes, setRecipes] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
-  const [loading, setLoading] = useState(false); 
+  const [searchValue, setSearchValue] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedMealType, setSelectedMealType] = useState('');
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [selectedDate, setSelectedDate] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,23 +19,23 @@ const RecipesPageContainer = () => {
   }, [searchValue]);
 
   const fetchData = (searchValue) => {
-    setLoading(true); 
+    setLoading(true);
     fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchValue}`)
       .then((response) => response.json())
       .then((data) => {
         if (data && data.meals) {
           setRecipes(data.meals);
         } else {
-          console.error("No recipes found");
+          console.error('No recipes found');
           setRecipes([]);
         }
       })
       .catch((error) => {
-        console.error("Fetch error:", error);
+        console.error('Fetch error:', error);
         setRecipes([]);
       })
       .finally(() => {
-        setLoading(false); 
+        setLoading(false);
       });
   };
 
@@ -39,24 +44,30 @@ const RecipesPageContainer = () => {
   };
 
   const addToMealPlan = (recipe, mealType) => {
-    const date = prompt("Select a date to add this recipe (YYYY-MM-DD)");
-    if (date) {
-      const mealPlans = JSON.parse(localStorage.getItem("mealPlans")) || {};
+    setSelectedMealType(mealType);
+    setSelectedRecipe(recipe);
+    setShowModal(true);
+  };
+
+  const handleModalSubmit = () => {
+    if (selectedDate && selectedRecipe && selectedMealType) {
+      const mealPlans = JSON.parse(localStorage.getItem('mealPlans')) || {};
 
       const updatedMealPlans = {
         ...mealPlans,
-        [date]: {
-          ...mealPlans[date],
-          [mealType]: [...(mealPlans[date]?.[mealType] || []), recipe],
+        [selectedDate]: {
+          ...mealPlans[selectedDate],
+          [selectedMealType]: [
+            ...(mealPlans[selectedDate]?.[selectedMealType] || []),
+            selectedRecipe,
+          ],
         },
       };
 
-      localStorage.setItem("mealPlans", JSON.stringify(updatedMealPlans));
+      localStorage.setItem('mealPlans', JSON.stringify(updatedMealPlans));
 
-      alert(
-        `Recipe "${recipe.strMeal}" has been added to ${mealType} on ${date}!`
-      );
-      navigate("/meal-planning");
+      setShowModal(false); 
+      navigate('/meal-planning');
     }
   };
 
@@ -66,8 +77,8 @@ const RecipesPageContainer = () => {
         searchValue={searchValue}
         onSearchChange={handleSearchChange}
       />
-      
-      {loading ? ( 
+
+      {loading ? (
         <div className="d-flex justify-content-center my-4">
           <div className="spinner-border" role="status">
             <span className="sr-only"></span>
@@ -92,6 +103,45 @@ const RecipesPageContainer = () => {
           )}
         </div>
       )}
+
+      <div className={`modal fade ${showModal ? 'show d-block' : ''}`} tabIndex="-1" style={{ display: showModal ? 'block' : 'none' }}>
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Select a Date for Meal Plan</h5>
+              <button
+                type="button"
+                className="btn-close"
+                onClick={() => setShowModal(false)}
+              ></button>
+            </div>
+            <div className="modal-body">
+              <input
+                type="date"
+                className="form-control"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+              />
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={() => setShowModal(false)}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="btn btn-success"
+                onClick={handleModalSubmit}
+              >
+                Add to Meal Plan
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
