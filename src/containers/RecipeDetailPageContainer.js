@@ -5,6 +5,7 @@ import MealImageComponent from "../components/MealImageComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
+
 const RecipeDetailPageContainer = () => {
   const { id } = useParams();
   const navigate = useNavigate(); // Creează o instanță a hook-ului useNavigate
@@ -38,9 +39,8 @@ const RecipeDetailPageContainer = () => {
     }
   }, [id]);
 
-  // Funcția care navighează la RecipesPage când butonul este apăsat
   const goToRecipesPage = () => {
-    navigate("/recipes"); // Redirecționează la pagina Recipes
+    navigate("/recipes");
   };
 
   if (loading) {
@@ -81,7 +81,7 @@ const RecipeDetailPageContainer = () => {
     <div className="container mt-4">
       <div className="row">
         <button
-          style={{ backgroundColor: "004526", color: "#fff" }}
+          style={{ backgroundColor: "#004526", color: "#fff" }}
           type="button"
           className="btn btn-md rounded-pill d-block mx-auto my-2"
           onClick={goToRecipesPage}
