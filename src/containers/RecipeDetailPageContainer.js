@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom"; // Importă useNavigate
 import MealVideoTutorial from "../components/MealVideoTutorial";
 import MealImageComponent from "../components/MealImageComponent";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const RecipeDetailPageContainer = () => {
   const { id } = useParams();
+  const navigate = useNavigate(); // Creează o instanță a hook-ului useNavigate
   const [recipe, setRecipe] = useState(null);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const mealPlans = JSON.parse(localStorage.getItem("mealPlans")) || {};
@@ -16,7 +19,7 @@ const RecipeDetailPageContainer = () => {
 
     if (foundRecipe) {
       setRecipe(foundRecipe);
-      setLoading(false); 
+      setLoading(false);
     } else {
       fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
         .then((response) => response.json())
@@ -26,19 +29,26 @@ const RecipeDetailPageContainer = () => {
           } else {
             console.error("Recipe not found in API response");
           }
-          setLoading(false); 
+          setLoading(false);
         })
         .catch((error) => {
           console.error("Error fetching recipe details:", error);
-          setLoading(false); 
+          setLoading(false);
         });
     }
   }, [id]);
 
+  // Funcția care navighează la RecipesPage când butonul este apăsat
+  const goToRecipesPage = () => {
+    navigate("/recipes"); // Redirecționează la pagina Recipes
+  };
+
   if (loading) {
-    
     return (
-      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "50vh" }}>
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ minHeight: "50vh" }}
+      >
         <div className="spinner-border" role="status">
           <span className="sr-only"> </span>
         </div>
@@ -51,7 +61,9 @@ const RecipeDetailPageContainer = () => {
   }
 
   const instructions = recipe.strInstructions
-    ? recipe.strInstructions.split("\r\n").map((step) => step.replace(/^Step \d+:/, '').trim())
+    ? recipe.strInstructions
+        .split("\r\n")
+        .map((step) => step.replace(/^Step \d+:/, "").trim())
     : [];
 
   const ingredients = [];
@@ -68,6 +80,16 @@ const RecipeDetailPageContainer = () => {
   return (
     <div className="container mt-4">
       <div className="row">
+        <button
+          style={{ backgroundColor: "004526", color: "#fff" }}
+          type="button"
+          className="btn btn-md rounded-pill d-block mx-auto my-2"
+          onClick={goToRecipesPage}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+          Back to Recipes
+        </button>
+
         {/* Left side: Recipe details */}
         <div className="col-md-8">
           <div className="card mb-4">
