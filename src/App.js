@@ -10,7 +10,7 @@ import RecipeDetailPage from "./pages/RecipeDetailPage.js";
 
 function App() {
   return (
-    <Router>
+    <Router basename="/meal-planner-with-react">
       <div className="app">
         <Routes>
           <Route path="/" element={<HomePage />} />
